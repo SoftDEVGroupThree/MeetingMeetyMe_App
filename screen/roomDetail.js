@@ -1,33 +1,79 @@
 import { Link, router} from 'expo-router';
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet,SafeAreaView, Button } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet,SafeAreaView, Button,Picker } from 'react-native';
 import { colors} from '../component/colors';
 import { useNavigation } from '@react-navigation/native';
 import { Calendar } from 'react-native-calendars';
+import { StatusBar } from 'expo-status-bar';
 
 export default function RoomDetailPage({ navigation, route }) {
+    const [selectedDate, setSelectedDate] = useState(null);
+    const handleDateSelect = (day) => {
+      setSelectedDate(day.dateString);
+    };
+    const [selectedTime, setSelectedTime] = useState('');
+    const [searchText, setSearchText] = useState('');
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>Room Booking</Text>
+        <Text style={styles.headerText}>ECC 809 </Text>
+        <View style={styles.searchBox}>
+        <TextInput
+            style={styles.input}
+            placeholder="Search..."
+            onChangeText={(text) => setSearchText(text)}
+            value={searchText}
+        />
+        </View>
       </View>
       <View style={styles.bottomBorder}>
           <View style={styles.Box}>
           </View>
           <View style={styles.container_smallbox}>
-          <View style={styles.Samll_Box}><Text style = {styles.text_small}>82%</Text></View>
+            <Text style={styles.text}>รอดึง</Text> <View style={styles.Samll_Box}><text style = {styles.text_small}>82%</text></View>
           </View>
           <Text style={styles.text_gary}>Date :</Text>
           <Text style={styles.text_gary}>Time :</Text>
       </View>
       <View style={styles.Flex}>
-        <Calendar/>
-        
+      <Calendar
+        onDayPress={(day) => {handleDateSelect(day)
+            console.log('selected day', day);
+            // ทำสิ่งที่คุณต้องการกับวันที่ที่ถูกเลือกได้ที่นี่
+        }}
+  
+    />
+    <StatusBar style="auto" />
+
         <View style={styles.Select_Time}>
-            <Text style={styles.Select_Time_text}>Select Time</Text>
+            <Picker
+            style={{ width: 270, height: 50 }}
+            selectedValue={selectedTime}
+            onValueChange={(itemValue, itemIndex) => setSelectedTime(itemValue)}
+            >
+            <Picker.Item label="8:00 AM" value="8:00 AM" />
+            <Picker.Item label="9:00 AM" value="9:00 AM" />
+            <Picker.Item label="10:00 AM" value="10:00 AM" />
+            <Picker.Item label="11:00 AM" value="11:00 AM" />
+            <Picker.Item label="12:00 AM" value="12:00 AM" />
+            <Picker.Item label="1:00 pM" value="1:00 pM" />
+            <Picker.Item label="2:00 PM" value="2:00 PM" />
+            <Picker.Item label="3:00 PM" value="3:00 PM" />
+            <Picker.Item label="4:00 PM" value="4:00 PM" />
+            <Picker.Item label="5:00 PM" value="5:00 PM" />
+            <Picker.Item label="6:00 PM" value="6:00 PM" />
+            <Picker.Item label="7:00 PM" value="7:00 PM" />
+            <Picker.Item label="8:00 PM" value="8:00 PM" />
+            <Picker.Item label="9:00 PM" value="9:00 PM" />
+            <Picker.Item label="10:00 PM" value="10:00 PM" />
+            </Picker>
             </View>
         <View style = {styles.Button_confrim}>
-          <Text style={styles.Text_Button} >Confirm</Text>
+            <Button 
+                title= "Confirm"
+                color = 'green'
+
+                />
           
         </View>
         
@@ -50,10 +96,13 @@ const styles = StyleSheet.create({
     marginRight:20,
     marginTop:100,
     alignItems: 'center',
+    display:'flex',
+    flexDirection:'row',
   },
   headerText: {
     fontSize: 20,
     color: 'white',
+    flex:'50%'
   },
   bottomBorder: {
     height: 235, // ส่วนสูงของกรอบสีเหลี่ยม
@@ -170,4 +219,19 @@ Select_Time_text:{
     margin:10,
 
 },
+searchBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 10,
+    flex:'50%',
+    backgroundColor:'#f5f5f5',
+  },
+  input: {
+    flex: 1,
+    height: 20,
+    paddingHorizontal: 10,
+  },
+
 });
