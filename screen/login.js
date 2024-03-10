@@ -81,6 +81,7 @@ return (
 
 const styles = StyleSheet.create({
     container: {
+    top: 80,
     flex: 1,
     paddingHorizontal: 30,
     },

@@ -78,6 +78,7 @@ export default function RegisterScreen ({ navigation }){
 
 const styles = StyleSheet.create({
     container: {
+        top: 80,
         flex: 1,
         paddingHorizontal: 30,
     },
