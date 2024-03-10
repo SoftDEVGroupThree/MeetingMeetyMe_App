@@ -72,10 +72,8 @@ return (
     <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Login</Text>
     </TouchableOpacity>
-    <TouchableOpacity style={styles.registerButton}>
-        <Link href="register">
+    <TouchableOpacity style={styles.registerButton} onPress={() => navigation.navigate('register')}>
         <Text style={styles.registerText}>Register</Text>
-        </Link>
     </TouchableOpacity>
     </View>
     );
