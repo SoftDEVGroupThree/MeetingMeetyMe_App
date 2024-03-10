@@ -1,10 +1,11 @@
 import { Link, router} from 'expo-router';
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet,SafeAreaView, Button,Picker } from 'react-native';
-import { colors} from '../component/colors';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Button } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 import { Calendar } from 'react-native-calendars';
 import { StatusBar } from 'expo-status-bar';
+import { colors} from '../component/colors';
 
 export default function RoomDetailPage({ navigation, route }) {
     const [selectedDate, setSelectedDate] = useState(null);
@@ -30,7 +31,7 @@ export default function RoomDetailPage({ navigation, route }) {
           <View style={styles.Box}>
           </View>
           <View style={styles.container_smallbox}>
-            <Text style={styles.text}>รอดึง</Text> <View style={styles.Samll_Box}><text style = {styles.text_small}>82%</text></View>
+          <View style={styles.Small_Box}><Text style = {styles.text_small}>82%</Text></View>
           </View>
           <Text style={styles.text_gary}>Date :</Text>
           <Text style={styles.text_gary}>Time :</Text>
@@ -131,7 +132,7 @@ const styles = StyleSheet.create({
 
     
 },
-Samll_Box: {
+Small_Box: {
   height: 30, // ส่วนสูงของกรอบสีเหลี่ยม
   width:50,
   borderTopLeftRadius: 10,

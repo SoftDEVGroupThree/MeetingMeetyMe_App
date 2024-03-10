@@ -14,7 +14,7 @@ export default function RoomBookingPage({ navigation, route }) {
           <View style={styles.Box}>
           </View>
           <View style={styles.container_smallbox}>
-            <Text style={styles.text}>รอดึง</Text> <View style={styles.Samll_Box}><text style = {styles.text_small}>82%</text></View>
+          <Text><Text style={styles.text}>รอดึง</Text> <View style={styles.Samll_Box}><Text style = {styles.text_small}>82%</Text></View></Text>
           </View>
           <Text style={styles.text_gary}>Date :</Text>
           <Text style={styles.text_gary}>Time :</Text>
