@@ -1,6 +1,6 @@
 
 import React from "react";
-import {StyleSheet, View, Text, TextInput} from "react-native";
+import {StyleSheet, View, Text, TouchableOpacity} from "react-native";
 import { colors } from "../component/colors";
 import { Button } from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
@@ -22,13 +22,9 @@ export const HomePage = ({ navigation }) => {
                 </Text>
             </View>
             <View style = {[style.box]}></View>
-            <View style = {{padding: 30}}>
-            <Button 
-                title= "Let's get started!"
-                color = {colors.dark}
-                onPress={onLogin}
-                />
-            </View>
+            <TouchableOpacity style={style.btnConfirm} onPress={onLogin}>
+                <Text style={{color: colors.white, fontSize: 16}}>Let's get started!</Text>
+            </TouchableOpacity>
         </View>
     );
 }
@@ -50,5 +46,25 @@ const style = StyleSheet.create({
             height: 200,
             backgroundColor: colors.box,
             borderRadius: 20
+        },
+        btnConfirm: {
+            position: "absolute",
+            bottom: 80, // ...at the bottom of its container
+            left: 30,
+            right: 30,
+            backgroundColor: '#31393C', // light grey background
+            flexDirection: "row",
+            justifyContent: "center", // center the content
+            alignItems: "center",
+            padding: 0, // some padding
+            paddingBottom: 10, // add safe area padding to existing padding
+            elevation: 10, // shadow for Android
+            shadowColor: '#000', // shadow for iOS
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.25,
+            shadowRadius: 3.84,
+            paddingHorizontal: 20,
+            paddingVertical: 20,
+            borderRadius: 10,
         },
     })
