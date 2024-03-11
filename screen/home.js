@@ -1,13 +1,16 @@
-import { Link, useLocalSearchParams} from "expo-router";
+
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { colors } from "../component/colors";
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from "react-native";
 import { Image } from "react-native";
+import { NavigationContainer } from '@react-navigation/native';
+
+
 
 export default function MainMenu({ navigation, route }) {
-    const { paramKey_Email } = route.params; // Corrected to access params.email
+    const { paramKey_Email } = route.params;
     console.log('Email:', paramKey_Email);
 
     const onClick_Booked = () => {
@@ -23,7 +26,7 @@ export default function MainMenu({ navigation, route }) {
             <SafeAreaView style={ styles.RoomContainer }>
                 <View style={styles.RoomList}>
                 <TouchableOpacity style={styles.RoomItem}
-                onPress={() => navigation.navigate('RoomDetail', { roomId: 1 })}
+                onPress={() => navigation.navigate('RoomDetail', { roomId: 1, paramKey_Email: paramKey_Email })}
                 >
                             <Image style={styles.RoomImage}
                                 source={require("../assets/splash.png")}
@@ -34,7 +37,6 @@ export default function MainMenu({ navigation, route }) {
                     <TouchableOpacity style={styles.RoomItem}>
                         <Text style={styles.RoomText}>Room 2</Text>
                     </TouchableOpacity>
-
                     <TouchableOpacity style={styles.RoomItem}>
                         <Text style={styles.RoomText}>Room 3</Text>
                     </TouchableOpacity>
@@ -44,22 +46,23 @@ export default function MainMenu({ navigation, route }) {
                     </TouchableOpacity>
                 </View>
             </SafeAreaView>
-                        
+            
 
             <SafeAreaView style={styles.bottomNavbar}>
-                <TouchableOpacity style={styles.menuItem}>
-                    <Text style={styles.menuText}>Home</Text>
+                <TouchableOpacity style={styles.menuItem}
+                >
+                    <Text style={styles.menuText_Focus}>Home</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.menuItem}>
-                    <Text style={styles.menuText}>Booked</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.menuItem}>
-                    <Text style={styles.menuText}>Notification</Text>
+                <TouchableOpacity 
+                    style={styles.menuItem} 
+                    onPress={() => navigation.navigate('RoomBooked', { paramKey_Email })}
+                >
+                    <Text style={styles.menuText}>RoomBooked</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.menuItem}>
                     <Text style={styles.menuText}>Profile</Text>
                 </TouchableOpacity>
-            </SafeAreaView>
+            </SafeAreaView>            
 
             <Text>Hello {paramKey_Email} </Text>
         </View>
@@ -92,7 +95,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-around",
         alignItems: "center",
-        borderRadius: 20,
+        borderRadius: 10,
         padding: 10, 
         paddingBottom: SafeAreaView + 10, // add safe area padding to existing padding
         elevation: 10, // shadow for Android
@@ -105,14 +108,18 @@ const styles = StyleSheet.create({
         flex: 3,
         justifyContent: "center",
         alignItems: "center",
-        padding: 8, // some padding
+        padding: 10, // some padding
     },
     menuText: {
         fontSize: 16,
         fontWeight: "bold",
         color: colors.white,
     },
-
+    menuText_Focus: {
+        fontSize: 16,
+        fontWeight: "bold",
+        color: colors.secondary,
+    },
     RoomContainer: {
         flex: 1,
         paddingHorizontal: 20,

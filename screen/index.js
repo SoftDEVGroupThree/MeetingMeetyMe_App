@@ -28,7 +28,6 @@ export const HomePage = ({ navigation }) => {
         </View>
     );
 }
-
 const style = StyleSheet.create({
         container: {
             flex: 1,

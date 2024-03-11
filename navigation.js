@@ -20,7 +20,6 @@ const MyNavigator = () => {
       <Stack.Screen name="RoomDetail" component={RoomDetail} screenOptions={{ headerShown: false }}/>
       <Stack.Screen name="RoomBooked" component={RoomBooked} screenOptions={{ headerShown: false }}/>
       <Stack.Screen name="RoomBooking" component={RoomBooking} screenOptions={{ headerShown: false }}/>
-
     </Stack.Navigator>
   );
 };
