@@ -3,10 +3,25 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet,SafeAreaView, Button } from 'react-native';
 import { colors} from '../component/colors';
 import { useNavigation } from '@react-navigation/native';
+import { Image } from "react-native";
 
 export default function RoomBookingPage({ navigation, route }) {
   const { paramKey_Email } = route.params;
+  const { selectedTime } = route.params;
+  const { selectedDate } = route.params;
+  const { roomName } = route.params;
+  const { image } = route.params;
+  console.log('Selected Time:', selectedTime);
   console.log('Email:', paramKey_Email);
+
+  const addRoom = [];
+
+  const handleAddroom = () => {
+    let roomArray = [selectedTime, selectedDate, roomName, image];
+    addRoom.push(roomArray);
+    navigation.navigate('RoomBooked', { paramKey_Email: paramKey_Email, room: addRoom });
+  }
+
 
   return (
     <View style={styles.container}>
@@ -14,27 +29,28 @@ export default function RoomBookingPage({ navigation, route }) {
           <Text style={styles.logo}>Meeting Meety Me</Text>
       </View>
       <View style={styles.bottomBorder}>
-          <View style={styles.Box}>
-          </View>
+      <View style={styles.Box}>
+        <Image style={styles.RoomImage}source={image}/>
+    </View>
           <View style={styles.container_smallbox}>
-              <Text style={styles.text}>ECC 809</Text> 
+              <Text style={styles.text}>{roomName}</Text> 
               <View style={styles.Small_Box}><Text style = {styles.text_small}>82%</Text></View>
           </View>
-          <Text style={styles.text_gary}>Date :</Text>
-          <Text style={styles.text_gary}>Time :</Text>
+          <Text style={styles.text_gary}>Date : { selectedDate }</Text>
+          <Text style={styles.text_gary}>Time : { selectedTime }</Text>
       </View>
       <View style={styles.Flex}>
         <View style={styles.flex_button2}>
           <TouchableOpacity style={styles.button2}
-            onPress={() => navigation.navigate('RoomBooking', { paramKey_Email: paramKey_Email })}
+            onPress={() => navigation.navigate('RoomDetail', { paramKey_Email: paramKey_Email, selectedTime: selectedTime, selectedDate: selectedDate, roomName: roomName, image: image})}
             ><Text style={styles.buttonText}>Cancel</Text>
             </TouchableOpacity>
         </View>
         <View style={styles.flex_button}>
           <TouchableOpacity style={styles.button}
-          onPress={() => navigation.navigate('RoomBooking', { paramKey_Email: paramKey_Email })}
+          onPress={() => navigation.navigate('RoomBooked', { paramKey_Email: paramKey_Email, selectedTime: selectedTime, selectedDate: selectedDate, roomName: roomName, image: image})}
           >
-                <Text style={styles.buttonText}>Confirm</Text>
+          <Text style={styles.buttonText}>Confirm</Text>
           </TouchableOpacity>
         </View>
 
@@ -291,5 +307,14 @@ bottomNavbar: {
   shadowOffset: { width: 0, height: 2 },
   shadowOpacity: 0.25,
   shadowRadius: 3.84,
+},
+RoomImage: {
+  width: 300,
+  height: 100,
+  borderRadius: 10,
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 2 }, 
+  shadowOpacity: 0.25,
+  shadowRadius: 3.84, 
 },
 });

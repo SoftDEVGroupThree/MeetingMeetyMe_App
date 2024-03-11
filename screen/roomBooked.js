@@ -3,9 +3,14 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet,SafeAreaView, Button } from 'react-native';
 import { colors} from '../component/colors';
 import { useNavigation } from '@react-navigation/native';
+import { Image } from "react-native";
 
 export default function RoomBookedPage({ navigation, route }) {
     const { paramKey_Email } = route.params;
+    const { selectedTime } = route.params;
+    const { selectedDate } = route.params;
+    const { roomName } = route.params;
+    const { image } = route.params;
     console.log('Email:', paramKey_Email);
 
     return (
@@ -13,36 +18,42 @@ export default function RoomBookedPage({ navigation, route }) {
           <View style={styles.topNavbar}>
               <Text style={styles.logo}>Meeting Meety Me</Text>
           </View>
-          <View style={styles.RoomItem}>
+
+          
+          {/* {roomName ? (
+              <View style={styles.RoomItem}>
                 <View style={styles.RoomItem2}>
-                  <View style={styles.pic}></View>
-                  <View style={styles.flex_2}>
-                      <View style={styles.detail_edifice}>
-                          <Text style={styles.text}>ECC</Text>
-                      </View>
-                      <View style={styles.detail_room}>
-                          <Text style={styles.text}>809</Text>
-                      </View>
-                      <View style={styles.detail_date}>
-                          <Text style={styles.text}>Sun, 07 Jan at 07:00 PM</Text>
-                      </View>
+                  <View style={styles.pic}>
+                    <Image style={styles.RoomImage} source={image}/>
                   </View>
-                
+                  <View style={styles.flex_2}>
+                    <View style={styles.detail_edifice}>
+                      <Text style={styles.text}>{roomName}</Text>
+                    </View>
+                    <View style={styles.detail_date}>
+                      <Text style={styles.text}>{selectedDate} {selectedTime}</Text>
+                    </View>
+                  </View>
                 </View>
                 <View style={styles.confirm}>
-                  <Text style={styles.confrim_text}>Confirm</Text>
-                  <Text style={styles.text}> ID 173826</Text>
-            </View>
-          </View>
-          <SafeAreaView style={styles.bottomNavbar}>
+                  <Text style={styles.confrim_text}>Confirmed ID:</Text>
+                  <Text style={styles.text}> 65010{Math.floor(Math.random() * 1000)}</Text>
+                </View>
+              </View>
+            ) : <Text style={{textAlign: 'center', paddingTop: 40, fontSize: 20}}>There's no any booked room yet</Text>}
+          <SafeAreaView style={styles.bottomNavbar}> */}
+
+
+
+
                 <TouchableOpacity style={styles.menuItem}
-                onPress={() => navigation.navigate('home', { paramKey_Email })}
+                onPress={() => navigation.navigate('home', { paramKey_Email, roomName, image, selectedDate, selectedTime})}
                 >
                     <Text style={styles.menuText}>Home</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
                     style={styles.menuItem} 
-                    onPress={() => navigation.navigate('RoomBooked', { paramKey_Email })}
+                    onPress={() => navigation.navigate('RoomBooked', { paramKey_Email, roomName, image, selectedDate, selectedTime })}
                 >
                     <Text style={styles.menuText_Focus}>RoomBooked</Text>
                 </TouchableOpacity>
@@ -57,7 +68,6 @@ export default function RoomBookedPage({ navigation, route }) {
     }
     
     const styles = StyleSheet.create({
-      // root:{backgroundColor:'white'},
 
     container: {
       top: 0,
@@ -187,5 +197,14 @@ export default function RoomBookedPage({ navigation, route }) {
     fontSize: 16,
     fontWeight: "bold",
     color: colors.white,
+  },
+  RoomImage: {
+    width: 150,
+    height: 110,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 }, 
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84, 
   },
     });

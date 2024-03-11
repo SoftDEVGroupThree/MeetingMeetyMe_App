@@ -1,9 +1,8 @@
 import { Link, router} from 'expo-router';
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert} from 'react-native';
 import { colors} from '../component/colors';
 import { useNavigation } from '@react-navigation/native';
-
 
 
 export default function LoginScreen() {
@@ -25,12 +24,14 @@ const handleLogin = () => {
     // Check if email is empty
     if (email.trim() === '') {
         setLoginError('Email is required');
+        Alert.alert("Email is required");
         return;
     }
 
     // Check if password is empty
     if (password.trim() === '') {
         setLoginError(console.log('Password is required'));
+        Alert.alert("Password is required");
         return;
     }
 
@@ -38,6 +39,7 @@ const handleLogin = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
         setLoginError(console.log('Please enter a valid email'));
+        Alert.alert("Please enter a valid email");
         return;
     }
 
@@ -46,6 +48,7 @@ const handleLogin = () => {
         // navigation.navigate('home', { email: email });
         navigation.navigate('home', { paramKey_Email: email });
     } else {
+        Alert.alert("E-mail or Passwrod is incorrect!");
         console.log('Login failed');
     }
 };

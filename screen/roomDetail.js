@@ -1,51 +1,50 @@
 import { Link, router} from 'expo-router';
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Button } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Button, Alert} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import DatePicker from 'react-native-neat-date-picker'
 import { StatusBar } from 'expo-status-bar';
 import { colors} from '../component/colors';
 import { Calendar } from 'react-native-calendars';
+import {openDatabase} from 'react-native-sqlite-storage';
+import { useNavigation } from '@react-navigation/native';
+import { Image } from "react-native";
+
 
 export default function RoomDetailPage({ navigation, route }) {
-  const [showDatePickerSingle, setShowDatePickerSingle] = useState(true)
   const { paramKey_Email } = route.params;
+  const { roomName } = route.params;
+  const { image } = route.params;
   console.log('Email:', paramKey_Email);
+  console.log('Room Name:', roomName);
+  console.log('Image:', image);
 
-  const [date, setDate] = useState('');
+
   const [startDate, setStartDate] = useState('');
-
-  
-  const openDatePickerSingle = () => setShowDatePickerSingle(true)
-  const onCancelSingle = () => {
-    // You should close the modal in here
-    setShowDatePickerSingle(false)
-  }
-
-  const onConfirmSingle = (output) => {
-    // You should close the modal in here
-    setShowDatePickerSingle(false)
-
-    // The parameter 'output' is an object containing date and dateString (for single mode).
-    // For range mode, the output contains startDate, startDateString, endDate, and EndDateString
-    console.log(output)
-    setDate(output.dateString)
-  }
-
-  const onConfirm = ({ date, dateString }) => {
-    console.log(date.getTime())
-    console.log(dateString)
-  }
-
-  const [selectedDate, setSelectedDate] = useState(null);
-  const handleDateSelect = (day) => {
-    setSelectedDate(day.dateString);
-  };
-
   const [endDate, setEndDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState('');
   const [searchText, setSearchText] = useState('');
+  const [selectedDate, setSelectedDate] = useState(null);
 
+
+  const handleDateSelect = (day) => {
+    setSelectedDate(day.dateString);
+  };
+  
+  const onTimeSelected = (time) => {
+    setSelectedTime(time);
+  };
+
+  const handleBook = () => {
+    if ( selectedDate != null && startDate != ''){
+    navigation.navigate('RoomBooking', { paramKey_Email: paramKey_Email, selectedTime: startDate, selectedDate: selectedDate, roomName: roomName, image: image})
+    }
+    else{
+      navigation.navigate('RoomDetail', { paramKey_Email: paramKey_Email, selectedTime: startDate, selectedDate: selectedDate, roomName: roomName, image: image});
+      Alert.alert('Please select date and time')
+    }
+  };
+
+  
   return (
     <View style={styles.container}>
       <View style={styles.topNavbar}>
@@ -53,14 +52,16 @@ export default function RoomDetailPage({ navigation, route }) {
       </View>
       <View style={styles.bottomBorder}>
     <View style={styles.Box}>
+    <Image style={styles.RoomImage}source={image}/>
     </View>
     <View style={styles.container_smallbox}>
-        <Text style={styles.text}>ECC 809</Text> 
+        
+        <Text style={styles.text}>{ roomName }</Text> 
         <View style={styles.Small_Box}><Text style = {styles.text_small}>82%</Text></View>
     </View>
     <View>
-        <Text style={styles.text_gary}>Date :</Text>
-        <Text style={styles.text_gary}>Time :</Text>
+        <Text style={styles.text_gary}>Date : { selectedDate }</Text>
+        <Text style={styles.text_gary}>Time : { startDate }</Text>
     </View>
     </View>
     
@@ -88,7 +89,6 @@ export default function RoomDetailPage({ navigation, route }) {
         selectedValue={startDate}
         onValueChange={(itemValue) => setStartDate(itemValue)}
       >
-        <Picker.Item label="Select Time" value="" />
         <Picker.Item label="9:00 AM - 10:00 AM" value="9:00" />
         <Picker.Item label="10:00 AM - 11:00 AM" value="10:00" />
         <Picker.Item label="11:00 AM - 12:00 PM" value="11:00" />
@@ -108,7 +108,7 @@ export default function RoomDetailPage({ navigation, route }) {
 
 
       <TouchableOpacity style={styles.button}
-       onPress={() => navigation.navigate('RoomBooking', { paramKey_Email: paramKey_Email })}
+       onPress={() => handleBook()}
        >
              <Text style={styles.buttonText}>Book!</Text>
        </TouchableOpacity>
@@ -146,7 +146,6 @@ const styles = StyleSheet.create({
     height: 100, // ส่วนสูงของกรอบสีเหลี่ยม
     
     borderColor: 'black',
-    borderWidth:1,
     backgroundColor: 'gray', // สีของกรอบสีเหลี่ยม
     borderRadius:10,
   },
@@ -290,5 +289,14 @@ button: {
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
+    },
+    RoomImage: {
+      width: 300,
+      height: 100,
+      borderRadius: 10,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 }, 
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84, 
     },
 });

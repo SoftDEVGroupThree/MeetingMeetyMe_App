@@ -1,15 +1,25 @@
 
-import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import React, {useEffect} from "react";
+import { View, Text, TouchableOpacity, StyleSheet, animatedValue } from "react-native";
 import { colors } from "../component/colors";
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from "react-native";
 import { Image } from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
-
-
+import {openDatabase} from 'react-native-sqlite-storage';
 
 export default function MainMenu({ navigation, route }) {
+
+    const imageSource = require("../assets/ECC.jpeg");
+    const imageSource2 = require("../assets/ECC1.jpeg");
+    const imageSource3 = require("../assets/ECC2.jpeg");
+    const imageSource4 = require("../assets/ECC3.jpeg");
+
+   
+    const { roomName } = route.params;
+    const { image } = route.params;
+    const { selectedDate } = route.params;
+    const { selectedTime } = route.params;
     const { paramKey_Email } = route.params;
     console.log('Email:', paramKey_Email);
 
@@ -22,28 +32,41 @@ export default function MainMenu({ navigation, route }) {
             <View style={styles.topNavbar}>
                 <Text style={styles.logo}>Meeting Meety Me</Text>
             </View>
-
             <SafeAreaView style={ styles.RoomContainer }>
                 <View style={styles.RoomList}>
                 <TouchableOpacity style={styles.RoomItem}
-                onPress={() => navigation.navigate('RoomDetail', { roomId: 1, paramKey_Email: paramKey_Email })}
+                onPress={() => navigation.navigate('RoomDetail', { roomId: 809, roomName:"ECC 809", paramKey_Email: paramKey_Email, image: imageSource })}
                 >
-                            <Image style={styles.RoomImage}
-                                source={require("../assets/splash.png")}
+                            <Image style={styles.RoomImage} 
+                                source={imageSource}
                             />
-                            <Text style={styles.RoomText}>Room 1</Text>
-                    </TouchableOpacity>
+                            <Text style={styles.RoomText}>ECC 809</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.RoomItem}
+                onPress={() => navigation.navigate('RoomDetail', { roomId: 810, roomName:"ECC 810", paramKey_Email: paramKey_Email, image: imageSource2 })}
+                >
+                            <Image style={styles.RoomImage} 
+                                source={imageSource2}
+                            />
+                            <Text style={styles.RoomText}>ECC 810</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.RoomItem}
+                onPress={() => navigation.navigate('RoomDetail', { roomId: 811, roomName:"ECC 811", paramKey_Email: paramKey_Email, image: imageSource3 })}
+                >
+                            <Image style={styles.RoomImage} 
+                                source={imageSource3}
+                            />
+                            <Text style={styles.RoomText}>ECC 811</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.RoomItem}
+                onPress={() => navigation.navigate('RoomDetail', { roomId: 812, roomName:"ECC 812", paramKey_Email: paramKey_Email, image: imageSource4 })}
+                >
+                            <Image style={styles.RoomImage} 
+                                source={imageSource4}
+                            />
+                            <Text style={styles.RoomText}>ECC 812</Text>
+                </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.RoomItem}>
-                        <Text style={styles.RoomText}>Room 2</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.RoomItem}>
-                        <Text style={styles.RoomText}>Room 3</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.RoomItem}>
-                        <Text style={styles.RoomText}>Room 4</Text>
-                    </TouchableOpacity>
                 </View>
             </SafeAreaView>
             
@@ -55,7 +78,7 @@ export default function MainMenu({ navigation, route }) {
                 </TouchableOpacity>
                 <TouchableOpacity 
                     style={styles.menuItem} 
-                    onPress={() => navigation.navigate('RoomBooked', { paramKey_Email })}
+                    onPress={() => navigation.navigate('RoomBooked', { paramKey_Email, roomName, image, selectedDate, selectedTime })}
                 >
                     <Text style={styles.menuText}>RoomBooked</Text>
                 </TouchableOpacity>
@@ -64,7 +87,6 @@ export default function MainMenu({ navigation, route }) {
                 </TouchableOpacity>
             </SafeAreaView>            
 
-            <Text>Hello {paramKey_Email} </Text>
         </View>
     );
 }
