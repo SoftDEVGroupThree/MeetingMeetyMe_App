@@ -177,9 +177,10 @@ text_small: {
   color:'white',
 },
 text_gary: {
-  fontSize: 13,
-  color:'gray',
+  fontSize: 15,
+  color:'black',
   marginBottom:10,
+  fontWeight: "bold",
 },
 Button: {
   marginTop:30,

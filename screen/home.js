@@ -21,6 +21,9 @@ export default function MainMenu({ navigation, route }) {
     const { selectedDate } = route.params;
     const { selectedTime } = route.params;
     const { paramKey_Email } = route.params;
+    const { room} = route.params;
+    
+    
     console.log('Email:', paramKey_Email);
 
     const onClick_Booked = () => {
@@ -78,7 +81,7 @@ export default function MainMenu({ navigation, route }) {
                 </TouchableOpacity>
                 <TouchableOpacity 
                     style={styles.menuItem} 
-                    onPress={() => navigation.navigate('RoomBooked', { paramKey_Email, roomName, image, selectedDate, selectedTime })}
+                    onPress={() => navigation.navigate('RoomBooked', { paramKey_Email, roomName, image, selectedDate, selectedTime, room })}
                 >
                     <Text style={styles.menuText}>RoomBooked</Text>
                 </TouchableOpacity>

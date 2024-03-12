@@ -1,9 +1,10 @@
 import { Link, router} from 'expo-router';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet,SafeAreaView, Button } from 'react-native';
 import { colors} from '../component/colors';
 import { useNavigation } from '@react-navigation/native';
 import { Image } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function RoomBookingPage({ navigation, route }) {
   const { paramKey_Email } = route.params;
@@ -14,13 +15,49 @@ export default function RoomBookingPage({ navigation, route }) {
   console.log('Selected Time:', selectedTime);
   console.log('Email:', paramKey_Email);
 
-  const addRoom = [];
+
+
+  const [addRoom, setAddRoom] = useState([]);
+
+  useEffect(() => {
+    // Load stored rooms from AsyncStorage when component mounts
+    loadRoomsFromStorage();
+  }, []); // Empty dependency array ensures the effect runs only once, when the component mounts
+
+  const loadRoomsFromStorage = async () => {
+    try {
+      const storedRoomsJSON = await AsyncStorage.getItem('storedRooms');
+      const storedRooms = storedRoomsJSON ? JSON.parse(storedRoomsJSON) : [];
+      setAddRoom(storedRooms);
+    } catch (error) {
+      console.error('Error loading rooms from AsyncStorage:', error);
+    }
+  };
+
+  const saveRoomsToStorage = async (rooms) => {
+    try {
+      const roomsJSON = JSON.stringify(rooms);
+      await AsyncStorage.setItem('storedRooms', roomsJSON);
+    } catch (error) {
+      console.error('Error saving rooms to AsyncStorage:', error);
+    }
+  };
 
   const handleAddroom = () => {
     let roomArray = [selectedTime, selectedDate, roomName, image];
-    addRoom.push(roomArray);
-    navigation.navigate('RoomBooked', { paramKey_Email: paramKey_Email, room: addRoom });
-  }
+    let newRooms = [...addRoom, roomArray];
+
+    // Save updated rooms to AsyncStorage
+    saveRoomsToStorage(newRooms);
+
+    // Update state with the new rooms
+    setAddRoom(newRooms);
+
+    // Navigate to 'RoomBooked' screen with the updated addRoom array
+    navigation.navigate('RoomBooked', { paramKey_Email, room: newRooms });
+    console.log('Room:', newRooms);
+  };
+
 
 
   return (
@@ -48,7 +85,7 @@ export default function RoomBookingPage({ navigation, route }) {
         </View>
         <View style={styles.flex_button}>
           <TouchableOpacity style={styles.button}
-          onPress={() => navigation.navigate('RoomBooked', { paramKey_Email: paramKey_Email, selectedTime: selectedTime, selectedDate: selectedDate, roomName: roomName, image: image})}
+          onPress={() => handleAddroom()}
           >
           <Text style={styles.buttonText}>Confirm</Text>
           </TouchableOpacity>
@@ -126,9 +163,10 @@ text_small: {
   color:'white',
 },
 text_gary: {
-  fontSize: 13,
-  color:'gray',
+  fontSize: 14,
+  color:'black',
   marginBottom:10,
+  fontWeight: "bold",
 
   
  
