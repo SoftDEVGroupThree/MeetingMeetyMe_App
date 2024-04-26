@@ -2,7 +2,6 @@ import { Link, router} from 'expo-router';
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Button } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import DatePicker from 'react-native-neat-date-picker'
 import { StatusBar } from 'expo-status-bar';
 import { colors} from '../component/colors';
 import { Calendar } from 'react-native-calendars';
@@ -41,7 +40,7 @@ export default function RoomDetailPage({ navigation, route }) {
   const handleDateSelect = (day) => {
     setSelectedDate(day.dateString);
   };
-
+  
   const [endDate, setEndDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState('');
   const [searchText, setSearchText] = useState('');

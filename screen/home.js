@@ -1,6 +1,6 @@
 
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, animatedValue } from "react-native";
 import { colors } from "../component/colors";
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from "react-native";
@@ -22,26 +22,34 @@ export default function MainMenu({ navigation, route }) {
             <View style={styles.topNavbar}>
                 <Text style={styles.logo}>Meeting Meety Me</Text>
             </View>
-
             <SafeAreaView style={ styles.RoomContainer }>
                 <View style={styles.RoomList}>
                 <TouchableOpacity style={styles.RoomItem}
                 onPress={() => navigation.navigate('RoomDetail', { roomId: 1, paramKey_Email: paramKey_Email })}
                 >
                             <Image style={styles.RoomImage}
-                                source={require("../assets/splash.png")}
+                                source={require("../assets/ECC.jpeg")}
                             />
                             <Text style={styles.RoomText}>Room 1</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.RoomItem}>
+                    <Image style={styles.RoomImage}
+                                source={require("../assets/ECC.jpeg")}
+                            />
                         <Text style={styles.RoomText}>Room 2</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.RoomItem}>
+                    <Image style={styles.RoomImage}
+                                source={require("../assets/ECC.jpeg")}
+                            />
                         <Text style={styles.RoomText}>Room 3</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.RoomItem}>
+                    <Image style={styles.RoomImage}
+                                source={require("../assets/ECC.jpeg")}
+                            />
                         <Text style={styles.RoomText}>Room 4</Text>
                     </TouchableOpacity>
                 </View>
@@ -64,7 +72,6 @@ export default function MainMenu({ navigation, route }) {
                 </TouchableOpacity>
             </SafeAreaView>            
 
-            <Text>Hello {paramKey_Email} </Text>
         </View>
     );
 }

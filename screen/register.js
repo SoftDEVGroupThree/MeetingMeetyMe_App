@@ -1,9 +1,9 @@
 
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert} from 'react-native';
 import { colors} from '../component/colors';
 import React, { useState } from 'react';
 import { Link } from 'expo-router';
-
+import { useNavigation } from '@react-navigation/native';
 
 export default function RegisterScreen ({ navigation }){
 
@@ -14,20 +14,29 @@ export default function RegisterScreen ({ navigation }){
     const [confirmPassword, setConfirmPassword] = useState('');
 
     const handleRegistration = () => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         console.log('Name:', name);
         console.log('Phone:', phone);
         console.log('Email:', email);
-
-        if (password !== confirmPassword) {
-            console.log('Password and Confirm Password do not match');
-            return; // Exit the function if passwords don't match
-        } else {
+        console.log('password:', password);
+        console.log('confirmPassword:', confirmPassword);
+        
+        if ( name.trim() !== ''  && phone.trim() !== '' && email.trim() !== '' && password.trim() !== '' && confirmPassword.trim() !== '' ){
             navigation.navigate('login');
+            Alert.alert('Register Success')
         }
+        // if (!emailRegex.test(email)) {
+        //     console.log('Please enter a valid email');
+        //     Alert.alert("Please enter a valid email");
+        //     return;
+        // }
+        else {
+                Alert.alert(" Please fill all field")
+                navigation.navigate('register')
+                console.log('Please fill all field')
+            }
+    }
 
-        console.log('Password:', password);
-        console.log('Confirm Password:', confirmPassword);
-    };
 
     return (
         <View style={styles.container}>
